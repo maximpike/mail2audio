@@ -1,0 +1,224 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page Container */
+.page-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card */
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 60px 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center
+}
+
+/* Logo */
+.logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* lines on the left (representing email text) */
+.logo-lines {
+    position: absolute;
+    left: 15px;
+    flex-direction: column;
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.line-bar {
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+}
+
+.line-1 { width: 18px; }
+.line-2 { width: 14px; }
+
+/* Audio wave bars on the right */
+.logo-waves {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.wave-bar {
+    width: 3px;
+    background: white;
+    border-radius: 2px;
+}
+
+.wave-1 { height: 12px; }
+.wave-2 { height: 20px; }
+.wave-3 { height: 16px; }
+.wave-4 { height: 24px; }
+.wave-5 { height: 14px; }
+
+/* Typography */
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 13px;
+}
+
+.tagline {
+    font-size: 18px;
+    color: #718096;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+/* Features */
+.features {
+    text-align: left;
+    margin-bottom: 40px;
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #4a5568;
+}
+
+.feature:last-child {
+    margin-bottom: 0;
+}
+
+.feature-icon {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.feature-text {
+    line-height: 1.5;
+}
+
+/* Google Sign In Button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a202c;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    text-decoration: none;
+}
+
+.google-btn:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transform: translateY(-2px);
+}
+
+.google-btn:active {
+    transform: translateY(0);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transition: opacity 0.2s ease;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transition: opacity 0.2s ease;
+}
+
+.footer a:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .card {
+        padding: 40px 24px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .tagline {
+        font-size: 16px;
+    }
+
+    .features {
+        padding: 20px;
+    }
+
+    .feature {
+        font-size: 14px;
+    }
+}
+
