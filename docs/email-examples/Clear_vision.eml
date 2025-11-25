@@ -1,0 +1,1094 @@
+Delivered-To: maximilianpike@gmail.com
+Received: by 2002:a05:7022:2188:b0:10e:930a:e34a with SMTP id bh8csp2947442dlb;
+        Tue, 21 Oct 2025 00:40:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2f2AwQUo3+4hkCQAgtflRWKh5qA7mvLgTCyHJX1YwhDjLJQwj/9U5b82R88yCXV4CEfp9
+X-Received: by 2002:a05:600d:828d:b0:471:1d8e:3c4f with SMTP id 5b1f17b1804b1-4711d8e406bmr59679205e9.24.1761032416863;
+        Tue, 21 Oct 2025 00:40:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1761032416; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gcZj70ZbMkBjAX9W+zO9sVqTa8F+0iRHeO/xW+ougDWuTWeeiGrSzE1ryodVifqKL5
+         a3BBZzJlVd0Vs7ekXd/UADoLFQsiig4IVGRWBMLr/S3rTj9tQI6XmV8DbT7bNJDD4O5C
+         5POvNGvRNA3fqZcSZSqzePKf5Gum+wrtxmtd63FuuPy0BxB9P1ZSJ18b6l5czcJBIBZR
+         yr3YJUkC1yCMqK7oyuTLsg4E2oOCZ9QEjQBrSwSfAyNFwk9YmC7pleXlczLI86KZArkf
+         7tRtTNsrj4hUwqobbj3hsfiwfH8sACmh2ujXqbbfYFrxLmb2WnGE5ILNL/QZKFZxCZc5
+         yRRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:content-transfer-encoding:message-id:to:subject:from
+         :date:mime-version:list-unsubscribe-post:list-unsubscribe
+         :dkim-signature:dkim-signature;
+        bh=fqJsPyDSTQPmNOCK3NIeos3pjbZB1e5XIxt8aE7Va70=;
+        fh=qfOiCYOD9IG9KiMYkb0JTuVUh6NSisL46+IEpfFZL+o=;
+        b=CqcSXcidhBYje+cDoNkBRkcMhFqeEJqeW/Zv0nrJRdHKuWCgCUzna6c3hIC75JDbdi
+         qpexZMcAOoGHbUsm52XMBQtDkr/MXCMgonaaSFE4HckkGChbmKydutkpZ3g3+z2+tUrp
+         IjjLX/CFS4HtJjeL5g59hW//DcY2sAmgPo8JJHmS7uELwrDI3MvSbHOmrQHfmPEt+bur
+         FQ3n2qq12ThdmdMr/w+FTTucV5rjr8TqZvlP00tfr2t7QD73NR7+ShOSehir7wcgz1pw
+         tM9uJW+yVvnUzoaUbffK0g6jfg9RrRu1SwtlFxvhXYp0OeWOrtiWhNw8L2CdZ84nAxAP
+         o+9w==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@vestact.com header.s=nhmxhqsgmbktzef2zgovcudh6rbthjgn header.b=Vv8etijG;
+       dkim=pass header.i=@amazonses.com header.s=oovztaqzkyknbrqeeifugvu4e7zh66l3 header.b="XN3Gad/W";
+       spf=pass (google.com: domain of 010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com designates 23.249.218.3 as permitted sender) smtp.mailfrom=010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vestact.com
+Return-Path: <010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com>
+Received: from d218-3.smtp-out.eu-west-2.amazonses.com (d218-3.smtp-out.eu-west-2.amazonses.com. [23.249.218.3])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-427ea5a27c7si4738927f8f.26.2025.10.21.00.40.16
+        for <maximilianpike@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Oct 2025 00:40:16 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com designates 23.249.218.3 as permitted sender) client-ip=23.249.218.3;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@vestact.com header.s=nhmxhqsgmbktzef2zgovcudh6rbthjgn header.b=Vv8etijG;
+       dkim=pass header.i=@amazonses.com header.s=oovztaqzkyknbrqeeifugvu4e7zh66l3 header.b="XN3Gad/W";
+       spf=pass (google.com: domain of 010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com designates 23.249.218.3 as permitted sender) smtp.mailfrom=010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=vestact.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=nhmxhqsgmbktzef2zgovcudh6rbthjgn; d=vestact.com; t=1761032416;
+	h=List-Unsubscribe:List-Unsubscribe-Post:MIME-Version:Content-Type:Date:From:Subject:To:Message-ID:Content-Transfer-Encoding;
+	bh=P59ZZp4zZIdZN7/gun8xoc0DJcTz+ZTGvOCwF7rYuaE=;
+	b=Vv8etijGgfDX2OGCOqZmAZmIMl9UVQXGpmN97P+0jyb0ENfyfro51hgZIs12mfOF
+	eL9MD1tjPeJKLAlwirPHqLFJZPpcPxCCPGn6V9lS/Os0aPnlj7KrhilRXJDndsdaM9b
+	FPJ+79Zz3Ob7MSfMl/2ocqm2ji4AbdKFy2LAcFYs=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=oovztaqzkyknbrqeeifugvu4e7zh66l3; d=amazonses.com; t=1761032416;
+	h=List-Unsubscribe:List-Unsubscribe-Post:MIME-Version:Content-Type:Date:From:Subject:To:Message-ID:Content-Transfer-Encoding:Feedback-ID;
+	bh=P59ZZp4zZIdZN7/gun8xoc0DJcTz+ZTGvOCwF7rYuaE=;
+	b=XN3Gad/WHqOLa6uFLn9MUyNIJyyOlc5p1+OsS2L0QZw3nKj/AAZLj7QWYWw/sXy/
+	uHX+O6cdbUnZZPe2cJ/TQVOeOzvmTkPWmHXx/NXMMdSrPGgiOGleTdrEtQPw4FU/r2W
+	pOg92OR/5WWkrWbyZ9njc2A9CrlQOifn1sme/vIE=
+List-Unsubscribe: <https://www.vestact.com/unsubscribe.php?email=maximilianpike@gmail.com&button=submit>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+MIME-Version: 1.0
+Content-Type: text/html; charset=us-ascii
+Date: Tue, 21 Oct 2025 07:40:16 +0000
+From: Vestact <support@vestact.com>
+Subject: Clear vision 
+To: maximilianpike@gmail.com
+Message-ID: <010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000@eu-west-2.amazonses.com>
+X-OriginalArrivalTime: 21 Oct 2025 07:40:00.0886 (UTC) FILETIME=[E82BF960:01DC425D]
+Content-Transfer-Encoding: 7bit
+Feedback-ID: ::1.eu-west-2.nnr9/e7TFbp7/4PY1dxy1BZUJ3AWRXQaIZstdBZay2Y=:AmazonSES
+X-SES-Outgoing: 2025.10.21-23.249.218.3
+
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+    <head>
+        <!-- NAME: 1 COLUMN -->
+        <!--[if gte mso 15]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Clear vision </title>
+        
+    <style type="text/css">
+        p{
+            margin:10px 0;
+            padding:0;
+        }
+        table{
+            border-collapse:collapse;
+        }
+        h1,h2,h3,h4,h5,h6{
+            display:block;
+            margin:0;
+            padding:0;
+        }
+        img,a img{
+            border:0;
+            height:auto;
+            outline:none;
+            text-decoration:none;
+        }
+        body,#bodyTable,#bodyCell{
+            height:100%;
+            margin:0;
+            padding:0;
+            width:100%;
+        }
+        .mcnPreviewText{
+            display:none !important;
+        }
+        #outlook a{
+            padding:0;
+        }
+        img{
+            -ms-interpolation-mode:bicubic;
+        }
+        table{
+            mso-table-lspace:0pt;
+            mso-table-rspace:0pt;
+        }
+        .ReadMsgBody{
+            width:100%;
+        }
+        .ExternalClass{
+            width:100%;
+        }
+        p,a,li,td,blockquote{
+            mso-line-height-rule:exactly;
+        }
+        a[href^=tel],a[href^=sms]{
+            color:inherit;
+            cursor:default;
+            text-decoration:none;
+        }
+        p,a,li,td,body,table,blockquote{
+            -ms-text-size-adjust:100%;
+            -webkit-text-size-adjust:100%;
+        }
+        .ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+            line-height:100%;
+        }
+        a[x-apple-data-detectors]{
+            color:inherit !important;
+            text-decoration:none !important;
+            font-size:inherit !important;
+            font-family:inherit !important;
+            font-weight:inherit !important;
+            line-height:inherit !important;
+        }
+        #bodyCell{
+            padding:10px;
+        }
+        .templateContainer{
+            max-width:600px !important;
+            border:1px none ;
+        }
+        a.mcnButton{
+            display:block;
+        }
+        .mcnImage,.mcnRetinaImage{
+            vertical-align:bottom;
+        }
+        .mcnTextContent{
+            word-break:break-word;
+        }
+        .mcnTextContent img{
+            height:auto !important;
+        }
+        .mcnDividerBlock{
+            table-layout:fixed !important;
+        }
+        body,#bodyTable{
+            background-color:#dee0e2;
+        }
+        #bodyCell{
+            border-top:0;
+        }
+        .templateContainer{
+            border:1px none ;
+        }
+        h1{
+            color:#222222;
+            font-family:Georgia, Times, 'Times New Roman', serif;
+            font-size:36px;
+            font-style:normal;
+            font-weight:normal;
+            line-height:125%;
+            letter-spacing:normal;
+            text-align:left;
+        }
+        h2{
+            color:#08088a;
+            font-family:Georgia, Times, 'Times New Roman', serif;
+            font-size:24px;
+            font-style:normal;
+            font-weight:bold;
+            line-height:125%;
+            letter-spacing:normal;
+            text-align:left;
+        }
+        h3{
+            color:#08088a;
+            font-family:Georgia, Times, 'Times New Roman', serif;
+            font-size:18px;
+            font-style:normal;
+            font-weight:normal;
+            line-height:125%;
+            letter-spacing:normal;
+            text-align:left;
+        }
+        h4{
+            color:#08088a;
+            font-family:Georgia, Times, 'Times New Roman', serif;
+            font-size:16px;
+            font-style:normal;
+            font-weight:bold;
+            line-height:125%;
+            letter-spacing:normal;
+            text-align:left;
+        }
+        #templatePreheader{
+            background-color:#fafafa;
+            background-image:none;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:cover;
+            border-top:0;
+            border-bottom:0;
+            padding-top:0px;
+            padding-bottom:9px;
+        }
+        #templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+            color:#656565;
+            font-family:Helvetica;
+            font-size:12px;
+            line-height:150%;
+            text-align:left;
+        }
+        #templatePreheader .mcnTextContent a,#templatePreheader .mcnTextContent p a{
+            color:#656565;
+            font-weight:normal;
+            text-decoration:underline;
+        }
+        #templateHeader{
+            background-color:#ffffff;
+            background-image:none;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:cover;
+            border-top:10px none #a6bfc9;
+            border-bottom:0;
+            padding-top:0px;
+            padding-bottom:10px;
+        }
+        #templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+            color:#202020;
+            font-family:Helvetica;
+            font-size:16px;
+            line-height:150%;
+            text-align:left;
+        }
+        #templateHeader .mcnTextContent a,#templateHeader .mcnTextContent p a{
+            color:#007C89;
+            font-weight:normal;
+            text-decoration:underline;
+        }
+        #templateBody{
+            background-color:#ffffff;
+            background-image:none;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:cover;
+            border-top:0;
+            border-bottom:2px solid #EAEAEA;
+            padding-top:0;
+            padding-bottom:9px;
+        }
+        #templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+            color:#202020;
+            font-family:Georgia, Times, 'Times New Roman', serif;
+            font-size:16px;
+            line-height:150%;
+            text-align:left;
+        }
+        #templateBody .mcnTextContent a,#templateBody .mcnTextContent p a{
+            color:#4a7e28;
+            font-weight:normal;
+            text-decoration:underline;
+        }
+        #templateFooter{
+            background-color:#FAFAFA;
+            background-image:none;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:cover;
+            border-top:0;
+            border-bottom:0;
+            padding-top:9px;
+            padding-bottom:9px;
+        }
+        #templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+            color:#656565;
+            font-family:Helvetica;
+            font-size:12px;
+            line-height:150%;
+            text-align:center;
+        }
+        #templateFooter .mcnTextContent a,#templateFooter .mcnTextContent p a{
+            color:#656565;
+            font-weight:normal;
+            text-decoration:underline;
+        }
+    @media only screen and (min-width:768px){
+        .templateContainer{
+            width:600px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        body,table,td,p,a,li,blockquote{
+            -webkit-text-size-adjust:none !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        body{
+            width:100% !important;
+            min-width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #bodyCell{
+            padding-top:10px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnRetinaImage{
+            max-width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImage{
+            width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+            max-width:100% !important;
+            width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnBoxedTextContentContainer{
+            min-width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageGroupContent{
+            padding:9px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+            padding-top:9px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+            padding-top:18px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageCardBottomImageContent{
+            padding-bottom:9px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageGroupBlockInner{
+            padding-top:0 !important;
+            padding-bottom:0 !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageGroupBlockOuter{
+            padding-top:9px !important;
+            padding-bottom:9px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnTextContent,.mcnBoxedTextContentColumn{
+            padding-right:18px !important;
+            padding-left:18px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+            padding-right:18px !important;
+            padding-bottom:0 !important;
+            padding-left:18px !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcpreview-image-uploader{
+            display:none !important;
+            width:100% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        h1{
+            font-size:22px !important;
+            line-height:125% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        h2{
+            font-size:20px !important;
+            line-height:125% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        h3{
+            font-size:18px !important;
+            line-height:125% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        h4{
+            font-size:16px !important;
+            line-height:150% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        .mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+            font-size:14px !important;
+            line-height:150% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #templatePreheader{
+            display:block !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+            font-size:14px !important;
+            line-height:150% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+            font-size:16px !important;
+            line-height:150% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+            font-size:16px !important;
+            line-height:150% !important;
+        }
+
+}    @media only screen and (max-width: 480px){
+        #templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+            font-size:14px !important;
+            line-height:150% !important;
+        }
+
+}</style></head>
+    <body style="height: 100%;margin: 0;padding: 0;width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #dee0e2;">
+            <!--*|IF:MC_PREVIEW_TEXT|*-->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Your daily market insights</span><!--<![endif]-->
+        <!--*|END:IF|*-->
+        <center>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;background-color: #dee0e2;">
+                <tr>
+                    <td align="center" valign="top" id="bodyCell" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 10px;width: 100%;border-top: 0;">
+                        <!-- BEGIN TEMPLATE // -->
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                        <tr>
+                        <td align="center" valign="top" width="600" style="width:600px;">
+                        <![endif]-->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;border: 1px none;max-width: 600px !important;">
+                            <tr>
+                                <td valign="top" id="templatePreheader" style="background:#fafafa none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #fafafa;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 0px;padding-bottom: 9px;"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateHeader" style="background:#ffffff none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #ffffff;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 10px none #a6bfc9;border-bottom: 0;padding-top: 0px;padding-bottom: 10px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://www.vestact.com/pls/pub/logo.png?c=48194&s=Q2xlYXIgdmlzaW9uIA%3D%3D&d=2025102109" width="564" style="max-width: 600px;padding-bottom: 0px;vertical-align: bottom;display: inline !important;border-radius: 0%;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateBody" style="background:#ffffff none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #ffffff;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 2px solid #EAEAEA;padding-top: 0;padding-bottom: 9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h1 style="display: block;margin: 0;padding: 0;color: #222222;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 36px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: normal;text-align: left;">Clear vision </h1>
+<h3 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 18px;font-style: normal;font-weight: normal;line-height: 125%;letter-spacing: normal;text-align: left;">21 Oct 2025</h3>
+<br>
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">Market scorecard</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            <b>US markets kicked off a packed earnings week on a strong note, rebounding back toward record highs</b>. A rally in Apple helped power major indices higher, with the tech giant jumping 3.9% to notch its first record close since December. The S&P 500 and Nasdaq are edging back to within sight of their October peaks.
+<br>
+ 
+<br>
+In company news, Amazon Web Services is grappling with lingering disruptions after a major outage hit key clients, from government agencies to AI firms and financial platforms. Elsewhere, Apple's newest iPhones are off to a flying start, with the base model leading the charge - and the iPhone Air models selling out in China within minutes of launch, signalling robust early demand for Cupertino's latest lineup.
+<br>
+ 
+<br>
+At the close, the <font color="#04B431">JSE All-share closed up 0.53%</font>, the <font color="#04B431">S&P 500 rose 1.07%</font>, and the <font color="#04B431">Nasdaq was 1.37% higher</font>.  Splendid!
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">One thing, from Paul</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            Emma Dunkley, the FT's asset management reporter, has an amusing post in today's edition with the following headline: <b>Short sellers blame retail for poor returns</b>. Of course, I think it's funny, because I love it when stock market bears get punished. Short sellers have suffered their worst returns in half a decade. Idiots!
+<br>
+ 
+<br>
+<b>Retail investors in the US seem to like buying low-quality meme stocks, inflicting heavy losses on the "geniuses" at hedge funds who look for crappy companies to short</b>.
+<br>
+ 
+<br>
+In the piece, Dunkley notes that a portfolio of 250 US stocks that are most popular with short sellers has surged 57 per cent this year, hurting the traders betting on those shares' decline, according to calculations by data group S3 Partners. 
+<br>
+ 
+<br>
+I really enjoyed the stories in 2022 when a firm called Melvin Capital, run by a trader whiz kid called Gabe Plotkin, shut down after being torpedoed by wrong-way bets on GameStop. It lost billions of dollars as it scrambled to cover its short positions against the video game retailer that became a darling of retail traders, including a charismatic freak called Roaring Kitty (real name Keith Gill, pictured here).
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://www.vestact.com/images/2025/oct/kitty.png" width="564" style="max-width: 600px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">Byron's beats</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            I was surprised to learn that there are now more listed ETFs than there are listed shares of companies in the US. <b>I was even more amazed when I saw that 1 out of 4 ETFs use leverage</b>. This means that the underlying structure borrows money to give owners more exposure to a certain stock or theme.
+<br>
+ 
+<br>
+<b>For example there is the 2x long Nvidia ETF</b>. That means that if Nvidia goes up 3%, the ETF will go up 6% more or less. Of course, the opposite is also true and you get hammered if the share goes down. 
+<br>
+ 
+<br>
+These are not products that buy-and-hold investors should be using. <b>ETFs were initially intended for passive investors to get cheap exposure to the overall market</b>. Wall Street has done the exact opposite by giving speculators access to magnified movements of one stock. It does not get more focused than that. My advice is to avoid. 
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://www.vestact.com/images/2025/oct/nvdu.png" width="564" style="max-width: 600px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">Bright's banter</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            EssilorLuxottica's third-quarter results were a sight for focused eyes, and a welcome one for some of our long-term clients who've held the stock for over five years. <b>The world's largest eyewear group reported revenue up 11.7% to EUR6.87 billion</b>, well ahead of forecasts, as its collaboration with Meta Platforms starts paying off.
+<br>
+ 
+<br>
+<b>Sales of the new Ray-Ban Meta and Oakley Meta AI glasses have been "exponential,"</b> helping wearables become a key growth engine alongside steady demand in sunglasses and vision care. Chairman Francesco Milleri said momentum remains strong heading into year-end, with booming wearable and medical tech divisions helping the group stay ahead of the curve.
+<br>
+ 
+<br>
+EssilorLuxottica continues to buy its way deeper into innovation - snapping up RetinAI, and eye-care groups PUcore and Optegra. <b>The market has rewarded the vision with shares up 53.2% year-to-date, proving that patience pays in style</b>.
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://www.vestact.com/images/2025/oct/rayb.png" width="564" style="max-width: 600px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">Linkfest, lap it up</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            <b>Astronomers see a mysterious object shining in the deep sky</b>. It could be older than the stars - <a href="https://7t0mncrf.r.eu-west-2.awstrack.me/L0/https:%2F%2Fwww.theatlantic.com%2Fscience%2F2025%2F09%2Fprimordial-black-hole-cosmology%2F684349%2F%3Fgift=TGgP34XZPBAppowZPOH7p9MvlpCW6XS-HaRajyzvM4g%26utm_source=copy-link%26utm_medium=social%26utm_campaign=share/1/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/N8eWW2RQXwEL-GhZdC15ihe9rMk=233"target="_blank">A primordial black hole</a>.
+<br>
+ 
+<br>
+<b>When we consume art, it evokes some feelings</b>. Good, bad, indifferent, whatever - <a href="https://7t0mncrf.r.eu-west-2.awstrack.me/L0/https:%2F%2Ftheoatmeal.com%2Fcomics%2Fai_art/1/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/eek-f6-Rdg2ojlIn8DC8aiGd4r0=233"target="_blank">AI art does the same, until you find out it's AI</a>. 
+<br>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                        
+                            <h2 style="display: block;margin: 0;padding: 0;color: #08088a;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 24px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;text-align: left;">Signing off</h2>
+
+                            <hr align="centre" width="100%"><br>
+                            <!-- Start content -->
+                            Asian markets opened mostly higher this morning, with gains across the region led by Australia and Japan - both seeing strong upward momentum. Hong Kong, Singapore, South Korea, and Indonesia followed in positive territory, while Malaysia and Taiwan traded softer.
+<br>
+ 
+<br>
+In local company news, Stefanutti Stocks surged after announcing a major legal win against Eskom - a dispute adjudication board ruled the construction group will receive an additional R685 million settlement, sending its shares up as much as 20% before settling 15% higher at R5.20.
+<br>
+ 
+<br>
+US equity futures are unchanged pre-market. The Rand is trading at around R17.23 to the US Dollar.
+<br>
+ 
+<br>
+Nearly 20% of the S&P 500 is set to report earnings this week - with heavyweights like Netflix and Tesla in focus.
+<br>
+ 
+<br>
+Keep well.
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table>
+<BR><BR><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Georgia, Times, 'Times New Roman', serif;font-size: 16px;line-height: 150%;text-align: left;">
+                            &nbsp;
+<span style="color:#08088a"><strong>Sent to you by Team Vestact</strong></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateFooter" style="background:#FAFAFA none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FAFAFA;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 9px;padding-bottom: 9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="">
+        <tr>
+            <td align="center" valign="top">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="">
+    <tbody><tr>
+        <td align="center" style="">
+            <table border="0" cellpadding="0" cellspacing="0" class="" style="">
+                <tbody><tr>
+                    <td align="center" valign="top" style="">
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" style="">
+                            <tbody><tr>
+                                <td align="center" valign="top" style="">
+                                    <!--[if mso]>
+                                    <table align="center" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                    <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="">
+                                                <tbody>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="">
+                                                <tbody>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" >
+                                                <tbody><tr>
+                                                    <td valign="top" >
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" >
+                                                            <tbody>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <tbody><tr>
+                                                    <td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                            <tbody>
+                                                        </tbody></table>
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                        <!--[if mso]>
+                                        <td align="center" valign="top">
+                                        <![endif]-->
+                                        
+                                        
+                                            <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                <tbody>
+                                            </tbody></table>
+                                        
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                    
+                                    <!--[if mso]>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" >
+    <tbody class="">
+
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                  <!--[if mso]>
+                <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                <tr>
+                <![endif]-->
+                
+                <!--[if mso]>
+                <td valign="top" width="600" style="width:600px;">
+                <![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #656565;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: center;">
+                        
+<strong>Our contact details are:</strong>
+<br>
+Suite 608, The Firestation, 16 Baker Street, Rosebank
+<BR>
+Telephone: 078 533 1063
+<br>
+<a href="https://7t0mncrf.r.eu-west-2.awstrack.me/L0/https:%2F%2Fwww.vestact.com/1/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/22yp46V6deTIpvJYDQHS8ySS_9Q=233" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #656565;font-weight: normal;text-decoration: underline;">Vestact Webpage</a><br>
+<br>
+<img data-file-id="1431790" height="40" src="https://www.vestact.com/images/mail_footer_175.png" style="border: 0px;width: 175px;height: 40px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="175"><br>
+<br>
+Want to change how you receive these emails?<br>
+You can <a href="https://7t0mncrf.r.eu-west-2.awstrack.me/L0/https:%2F%2Fwww.vestact.com%2Fregister_free.php/1/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/D2mX7yXpFSOYMuUCD6AXFwEOkgY=233" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #656565;font-weight: normal;text-decoration: underline;">sign up here</a> or <a href="https://7t0mncrf.r.eu-west-2.awstrack.me/L0/https:%2F%2Fwww.vestact.com%2Funsubscribe.php%3Femail=maximilianpike@gmail.com/1/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/ugE7RRt1K9FUerSPl1NdrWanfNU=233" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #656565;font-weight: normal;text-decoration: underline;">unsubscribe from this list</a>.
+                        </td>
+                    </tr>
+                </tbody></table>
+                <!--[if mso]>
+                </td>
+                <![endif]-->
+                
+                <!--[if mso]>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    <img alt="" src="https://7t0mncrf.r.eu-west-2.awstrack.me/I0/010b019a05b62c54-d08fae20-4f19-4f8e-a664-f618557fa6f5-000000/ea5dlTNj44Arm4KI4BY5ZCTFews=233" style="display: none; width: 1px; height: 1px;">
+</body>
+</html>
+
