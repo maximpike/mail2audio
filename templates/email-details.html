@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ email.subject }} - Mail2Audio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/email-detail.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="email-detail-container">
+        <!-- Back Button-->
+        <a href="/dashboard" class="back-button">
+            ← Back to Dashboard
+        </a>
+
+        <!-- Email Detail Card-->
+        <div class="email-detail-card">
+            <!-- Header -->
+            <div class="email-header">
+                <h1 class="email-subject-large"> {{ email.subject }}</h1>
+
+                <div class="email-metadata">
+                    <div class="metadata-item">
+                        <div class="metadata-label">From</div>
+                        <div class="metadata-value"> {{ email.sender }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">To</div>
+                        <div class="metadata-value">{{ email.recipient }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Date</div>
+                        <div class="metadata-value">{{ email.received_date.strftime('%B %d, %Y at %I:%M %p') if
+                            email.received_date else 'Unknown' }}
+                        </div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Audio Status</div>
+                        <div class="metadata-value">
+                            {% if email.has_audio %}
+                            ✅ Available
+                            {% else %}
+                            ⏸️ Not Generated
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audio Player -->
+            {% if email.has_audio %}
+            <div class="audio-player-section">
+                <div class="audio-player-label">🔊 Audio Version</div>
+                <audio controls style="width: 100%;">
+                    <source src="{{ email.audio_path }}" type="audio/mpeg">
+                    Your browser does not support the audio element
+                </audio>
+            </div>
+            {% else %}
+            <div class="audio-player-section">
+                <div class="no-audio-message">
+                    <div>⏸️ Audio not yet generated</div>
+                    <div style="font-size: 14px; margin-top: 8px; color: #718096;">
+                        Audio generation coming soon!
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Audio Player -->
+            <div class="email-body">
+                {% if email.body_html %}
+                <div>{{ email.body_html | safe }}</div>
+                {% elif email.body_text %}
+                <pre style="white-space: pre-wrap; font-family: inherit;">{{ email.body_text }}</pre>
+                {% else %}
+                <p style="color: #a0aec0;">No content available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

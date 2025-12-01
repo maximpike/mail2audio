@@ -24,7 +24,6 @@ def test_engine():
     Base.metadata.drop_all(engine)
     engine.dispose()
 
-
 @pytest.fixture(scope="function")
 def test_db(test_engine) -> Session:
     """

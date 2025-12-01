@@ -1,30 +1,24 @@
-from typing import Union
 from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+from app.models.base import engine, Base
+from app.routers import landing, emails, dashboard
 
-app = FastAPI(title="Mail2Audio API")
+# Create tables on startup
+Base.metadata.create_all(bind=engine)
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Union[bool, None] = None
+app = FastAPI(title="Mail2Audio")
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World", "message": "Mail2Audio API is running"}
+# How does this work with FE bundling and loading NB!!
+BASE_DIR = Path(__file__).resolve().parent.parent
 
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+app.include_router(landing.router, tags=["landing"]) # How does this work
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
+app.include_router(emails.router, tags=["emails"])
+app.include_router(dashboard.router, tags=["dashboard"])
 
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
-
 

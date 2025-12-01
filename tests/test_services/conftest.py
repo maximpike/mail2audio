@@ -5,7 +5,22 @@ import pytest
 from pytest_mock import MockerFixture
 from unittest.mock import Mock, MagicMock
 from pathlib import Path
+from app.models.base import Base
+from sqlalchemy import create_engine
 
+# Duplicate code in test_repositories/conftest.py
+@pytest.fixture(scope='function')
+def test_engine():
+    """ Create an in-memory SQLite engine for each test """
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False},
+        echo=False
+    )
+    Base.metadata.create_all(engine)
+    yield engine
+    Base.metadata.drop_all(engine)
+    engine.dispose()
 
 @pytest.fixture
 def sample_eml_files():
