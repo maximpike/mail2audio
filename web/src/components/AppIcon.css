@@ -1,0 +1,52 @@
+/* Landing Page Styles */
+/* Logo */
+.logo-container {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.text-lines {
+    position: absolute;
+    left: 12px;
+    flex-direction: column;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.line-bar {
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+}
+.line-1 { width: 22px; }
+.line-2 { width: 14px; }
+
+.audio-waves {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.wave-bar {
+    width: 3px;
+    background: white;
+    border-radius: 2px;
+}
+.wave-1 { height: 16px; }
+.wave-2 { height: 24px; }
+.wave-3 { height: 20px; }
+.wave-4 { height: 28px; }
+.wave-5 { height: 18px; }
