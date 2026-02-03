@@ -1,3 +1,4 @@
+<!--TODO: Successfully migrated to web - To be Removed-->
 class EmailUploader {
     constructor() {
         this.uploadZone = document.getElementById('uploadZone');
