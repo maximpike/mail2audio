@@ -1,5 +1,5 @@
+/* Dashboard.css */
 .dashboard-container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
     width: 100%;
@@ -10,21 +10,29 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    gap: 24px;
+}
+
+.dashboard-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
 }
 
 /* Upload Section */
 .upload-section {
+    flex: 1;
+    align-self: flex-start;
     background: white;
     border-radius: 12px;
-    padding: 40px;
-    margin-bottom: 40px;
+    padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .upload-zone {
     border: 2px dashed #cbd5e0;
     border-radius: 8px;
-    padding: 40px;
+    padding: 20px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -64,6 +72,7 @@
 
 /*Email List */
 .email-list {
+    flex: 2;
     background: white;
     border-radius: 12px;
     padding: 24px;
@@ -74,7 +83,7 @@
     font-size: 20px;
     font-weight: 600;
     color: #1a202c;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .email-item {
@@ -137,7 +146,7 @@
 /* Empty State */
 .empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 40px 20px;
     color: #a0aec0;
 }
 

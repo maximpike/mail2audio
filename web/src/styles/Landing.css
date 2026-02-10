@@ -1,9 +1,8 @@
 .landing-container {
     background: white;
     border-radius: 16px;
-    padding: 60px 40px;
-    max-width: 500px;
-    width: 100%;
+    padding: 40px 30px;
+    /*width: 100%;*/
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     text-align: center
 }
@@ -32,7 +31,8 @@
 
 .feature {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    gap: 4px;
     margin-bottom: 16px;
     font-size: 12px;
     color: #4a5568;
@@ -59,27 +59,4 @@
 
 .feature-text {
     line-height: 1.1;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    .landing-container {
-        padding: 40px 24px;
-    }
-
-    .landing-container h1 {
-        font-size: 28px;
-    }
-
-    .landing-container p {
-        font-size: 16px;
-    }
-
-    .features-container {
-        padding: 20px;
-    }
-
-    .feature {
-        font-size: 14px;
-    }
 }
