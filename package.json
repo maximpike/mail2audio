@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"cd packages/api && fastapi dev app/main.py\" \"cd packages/web && npm run dev\""
+  },
+  "name": "mail2audio",
+  "version": "1.0.0",
+  "description": "This project will allow a user to upload emails or link their gmail account. Once authenticated the user will be able to generate audio clips from newsletters they have subscribed to. This will use Amazon's AI Voice Generator Polly for Text To Speech. Currently building the email parsing service.",
+  "main": "index.js",
+  "workspaces": ["packages/web"],
+  "directories": {
+    "doc": "docs",
+    "test": "packages/api/tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maximpike/mail2audio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/maximpike/mail2audio/issues"
+  },
+  "homepage": "https://github.com/maximpike/mail2audio#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.repositories.email_repository import EmailRepository
-from app.schemas.email_schema import EmailCreate
+from app.repositories.email import EmailRepository
+from app.schemas.email import EmailCreate
 
 
 def test_save_email(test_db: Session, sample_email_data):

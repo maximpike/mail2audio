@@ -25,8 +25,8 @@ def test_engine():
 @pytest.fixture
 def sample_eml_files():
     """ Load .eml files from upload directory """
-    # Get the project root directory (assuming tests/ is at project root)
-    project_root = Path(__file__).parent.parent.parent
+    # Get the project root directory (packages/api/tests/test_services/ → 4 levels up to repo root)
+    project_root = Path(__file__).resolve().parents[4]
     email_examples_dir = project_root / "docs" / "email-examples"
     return {
         "tacos": email_examples_dir / "I_like_tacos.eml",
