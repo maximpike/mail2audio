@@ -1,0 +1,11 @@
+---
+# Mail2Audio provisioning playbook (skeleton).
+# Copy inventory/hosts.example to inventory/hosts before running:
+#   ansible-playbook site.yml
+
+- name: Provision Mail2Audio servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Verify connectivity
+      ansible.builtin.ping:

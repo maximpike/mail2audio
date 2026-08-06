@@ -26,7 +26,9 @@ mail2audio/
 │       ├── package.json
 │       └── vite.config.ts
 ├── docs/                       ← Shared documentation
-├── infrastructure/             ← Shared infra
+├── infrastructure/             ← IaC scaffolding
+│   ├── terraform/              ← AWS provider config (Polly, future hosting)
+│   └── ansible/                ← Provisioning playbook skeleton
 ├── package.json                ← Root: npm workspaces + dev orchestration
 └── CLAUDE.md
 ```
@@ -144,6 +146,13 @@ Gmail OAuth integration is partially implemented:
 - `packages/api/app/routers/auth.py` exists but is commented out in `main.py`
 - Frontend has `useAuth` hook and Google sign-in buttons
 
+## Infrastructure (Scaffolding Only)
+
+`infrastructure/` holds IaC starting points — no real resources are defined yet:
+
+- **Terraform** (`infrastructure/terraform/`): AWS provider `~> 5.0`, region defaults to `eu-west-2` (via `var.aws_region`), default tags applied to all resources (`Project`, `Environment`, `ManagedBy`). State files and `*.tfvars` are gitignored — never commit them
+- **Ansible** (`infrastructure/ansible/`): `site.yml` playbook skeleton. Copy `inventory/hosts.example` to `inventory/hosts` (the real inventory is gitignored)
+
 ## Testing Strategy
 
 - Tests mirror the `app/` directory structure in `packages/api/tests/`
@@ -181,3 +190,4 @@ Key rules (always apply):
 - User model and authentication schemas
 - Landing, dashboard, and email detail pages
 - Modern SPA with API backend
+- Terraform (AWS) and Ansible scaffolding in `infrastructure/` — no real resources defined yet

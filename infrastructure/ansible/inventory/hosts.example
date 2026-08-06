@@ -1,0 +1,8 @@
+# Copy this file to `hosts` and fill in real servers.
+# The real inventory is gitignored — it may contain private addresses.
+
+[api]
+# api1.example.com
+
+[web]
+# web1.example.com

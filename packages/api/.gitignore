@@ -1,0 +1,18 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Linters / type checkers
+.ruff_cache/
+.mypy_cache/
+
+# Packaging
+*.egg-info/
+build/
+dist/
