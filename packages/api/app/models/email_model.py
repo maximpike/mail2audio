@@ -1,10 +1,10 @@
-from sqlalchemy import String, DateTime
 from datetime import datetime
 
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy import DateTime, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import Base
+
 
 class Email(Base):
     __tablename__ = "emails"
@@ -13,9 +13,9 @@ class Email(Base):
     subject: Mapped[str] = mapped_column(String(500))
     sender: Mapped[str] = mapped_column(String(255))
     recipient: Mapped[str] = mapped_column(String(255))
-    received_at: Mapped[datetime] = mapped_column(DateTime()) # Double check
-    body: Mapped[str] = mapped_column(String()) # Check for TEXT Property
-    created_at: Mapped[datetime] = mapped_column(DateTime()) # Double check
+    received_at: Mapped[datetime] = mapped_column(DateTime())  # Double check
+    body: Mapped[str] = mapped_column(String())  # Check for TEXT Property
+    created_at: Mapped[datetime] = mapped_column(DateTime())  # Double check
 
     # id = Column(Integer, primary_key=True, index=True)
     # subject = Column(String(500), nullable=False)
