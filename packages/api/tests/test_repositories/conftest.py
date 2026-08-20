@@ -1,10 +1,13 @@
 """
 Repository layer fixtures - Test database setup
 """
+
 from datetime import datetime
+
 import pytest
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
+
 from app.models.base import Base  # Your SQLAlchemy Base
 
 
@@ -17,12 +20,13 @@ def test_engine():
     engine = create_engine(
         "sqlite:///:memory:",
         connect_args={"check_same_thread": False},  # Required for SQLite
-        echo=False
+        echo=False,
     )
     Base.metadata.create_all(engine)
     yield engine
     Base.metadata.drop_all(engine)
     engine.dispose()
+
 
 @pytest.fixture(scope="function")
 def test_db(test_engine) -> Session:
@@ -30,11 +34,7 @@ def test_db(test_engine) -> Session:
     Provide a SQLAlchemy session for repository tests.
     Automatically rolls back after each test.
     """
-    TestingSessionLocal = sessionmaker(
-        autocommit=False,
-        autoflush=False,
-        bind=test_engine
-    )
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
     session = TestingSessionLocal()
 
     try:
@@ -58,9 +58,10 @@ def sample_email_data():
         "received_at": datetime(2025, 1, 15, 10, 30, 0),
     }
 
+
 @pytest.fixture
 def sample_emails():
-    """ Sample list of emails and their data
+    """Sample list of emails and their data
     :return list of dict containing email data
     """
     return [
@@ -84,5 +85,5 @@ def sample_emails():
             "recipient": "user@example.com",
             "body": "US markets opened weaker on Friday, extending Thursday's sell-off, but staged a solid intraday rebound",
             "received_at": datetime(2025, 11, 17, 8, 26, 9),
-        }
+        },
     ]

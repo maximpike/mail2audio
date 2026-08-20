@@ -16,9 +16,63 @@ dependencies = [
 dev = [
     "pytest",
     "pytest-mock",
+    "pytest-cov",
     "httpx",
     "coverage",
+    "ruff",
+    "mypy",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+# Pin the target version so rule behaviour does not drift with the local interpreter.
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+# Selected explicitly rather than relying on ruff's defaults, which change between
+# releases -- an unpinned ruleset means CI can go red on a version bump alone.
+select = [
+    "E",      # pycodestyle errors
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "UP",     # pyupgrade
+    "PIE",    # flake8-pie
+    "RUF",    # ruff-specific
+]
+
+[tool.ruff.lint.flake8-bugbear]
+# The layered architecture injects collaborators via FastAPI's DI container, so a
+# function call in a parameter default is the intended pattern here, not the B008
+# bug it normally indicates. AGENT_PLAYBOOK.md section 6 forbids blanket noqa, so
+# these are exempted by configuration instead.
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.File",
+    "fastapi.Query",
+    # app/services/email_service.py imports Depends from fastapi.params (FastAPI's
+    # private module) rather than the public re-export. Same object, but it resolves
+    # under a different name, so it needs its own entry. Normalising that import is
+    # tracked separately -- see #35.
+    "fastapi.params.Depends",
+]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["app"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+disallow_untyped_defs = true
+
+# google-auth, google-auth-oauthlib and oauthlib ship no type stubs.
+[[tool.mypy.overrides]]
+module = [
+    "google_auth_oauthlib.*",
+    "google.oauth2.*",
+    "oauthlib.*",
+]
+ignore_missing_imports = true
