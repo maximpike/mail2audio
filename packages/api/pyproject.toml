@@ -5,6 +5,7 @@ requires-python = ">=3.11"
 dependencies = [
     "fastapi",
     "sqlalchemy",
+    "alembic",
     "uvicorn[standard]",
     "python-multipart",
     "google-auth-oauthlib",
@@ -30,6 +31,9 @@ testpaths = ["tests"]
 # Pin the target version so rule behaviour does not drift with the local interpreter.
 target-version = "py311"
 line-length = 100
+# Alembic writes these files; reformatting them creates noise in every
+# migration diff and gains nothing. env.py is hand-edited, so it stays linted.
+extend-exclude = ["alembic/versions"]
 
 [tool.ruff.lint]
 # Selected explicitly rather than relying on ruff's defaults, which change between

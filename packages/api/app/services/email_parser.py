@@ -12,25 +12,22 @@ class EmailParser:
     def parse_eml_file(eml_content: bytes) -> dict:
         """Parse .eml file content and extract relevant fields.
         args: eml_content - raw bytes of .eml file
-        :returns dict with keys: subject, sender, recipient, received_at, body
+        :returns dict with keys: subject, sender, recipient, received_at, body_html, body_text
         """
         msg: Message = email.message_from_bytes(eml_content)
 
         html_content = EmailParser._get_html_content(msg)
-        if html_content:
-            body_text = EmailParser._html_to_text(html_content)
-        else:
-            body_text = None
-
-        print("body_text:")
-        print(body_text)
+        body_text = EmailParser._html_to_text(html_content) if html_content else None
 
         return {
             "subject": (msg.get("Subject", "No Subject") or "No Subject").strip(),
             "sender": (msg.get("From", "Unknown") or "Unknown").strip(),
             "recipient": (msg.get("To", "Unknown") or "Unknown").strip(),
             "received_at": EmailParser._parse_date(msg.get("Date")),
-            "body": body_text,
+            # Both are returned: the raw HTML is retained so extraction can be
+            # re-run after the extractor improves, without re-uploading.
+            "body_html": html_content,
+            "body_text": body_text,
         }
 
     @staticmethod

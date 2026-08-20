@@ -7,22 +7,6 @@ from unittest.mock import Mock
 
 import pytest
 from pytest_mock import MockerFixture
-from sqlalchemy import create_engine
-
-from app.models.base import Base
-
-
-# Duplicate code in test_repositories/conftest.py
-@pytest.fixture(scope="function")
-def test_engine():
-    """Create an in-memory SQLite engine for each test"""
-    engine = create_engine(
-        "sqlite:///:memory:", connect_args={"check_same_thread": False}, echo=False
-    )
-    Base.metadata.create_all(engine)
-    yield engine
-    Base.metadata.drop_all(engine)
-    engine.dispose()
 
 
 @pytest.fixture
