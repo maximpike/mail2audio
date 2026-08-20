@@ -1,3 +1,3 @@
-from .email import EmailResponse, EmailBase
+from .email import EmailBase, EmailResponse
 
-__all__ = ["EmailResponse", "EmailBase"]
+__all__ = ["EmailBase", "EmailResponse"]
