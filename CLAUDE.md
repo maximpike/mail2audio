@@ -4,190 +4,117 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Mail2Audio is a full-stack application that converts email newsletters into audio clips using Amazon Polly TTS. Users can upload .eml files or link their Gmail account to generate audio from their subscribed newsletters.
+Mail2Audio converts email newsletters into audio clips using Amazon Polly TTS. Users upload `.eml`
+files or link a Gmail account. The email parsing pipeline is the part currently under construction —
+**TTS/audio generation does not exist yet**: `boto3` is a declared dependency but has no call sites,
+and there is no audio model, endpoint, or storage.
 
-**Stack:**
-- Backend: FastAPI (Python) with SQLAlchemy ORM
-- Frontend: React 19 + TypeScript + Vite
-- Database: SQLite (development)
-- Architecture: Repository pattern with service layer
+## Environment
 
-## Monorepo Structure
-
-```
-mail2audio/
-├── packages/
-│   ├── api/                    ← Python FastAPI backend
-│   │   ├── app/                ← Application code
-│   │   ├── tests/              ← Test suite
-│   │   └── pyproject.toml      ← Python project config
-│   └── web/                    ← React frontend
-│       ├── src/
-│       ├── package.json
-│       └── vite.config.ts
-├── docs/                       ← Shared documentation
-├── infrastructure/             ← IaC scaffolding
-│   ├── terraform/              ← AWS provider config (Polly, future hosting)
-│   └── ansible/                ← Provisioning playbook skeleton
-├── package.json                ← Root: npm workspaces + dev orchestration
-└── CLAUDE.md
-```
-
-## Development Commands
-
-### Running the application
+The Python virtualenv lives at the **repo root** (`venv/`, Python 3.13), not inside `packages/api/`.
+Activate it before any backend command:
 
 ```bash
-# Start both API and frontend concurrently (recommended)
-npm run dev
-
-# Or run separately:
-# Backend only (FastAPI dev server on :8000)
-cd packages/api && fastapi dev app/main.py
-
-# Frontend only (Vite dev server on :5173, proxies to :8000)
-cd packages/web && npm run dev
+source venv/bin/activate     # from repo root, before any backend command
 ```
 
-### Testing
+Backend commands (`fastapi`, `pytest`) must run **from `packages/api/`** — imports and the SQLite
+path resolve relative to that directory.
 
-```bash
-# Run all tests with coverage (from packages/api/)
-cd packages/api && pytest
+## Build/test baselines
 
-# Run specific test file
-cd packages/api && pytest tests/test_services/test_email_service.py
+`npm run dev` starts both servers. Backend tests are the only test suite — the frontend has none.
 
-# Run with verbose output
-cd packages/api && pytest -v
+- **`pytest` runs no coverage by default** (no coverage config in `pyproject.toml`). `pytest-cov` *is*
+  installed but undeclared in the dev extras, so `pytest --cov=app --cov-report=term-missing` works.
+- **`npm run lint` currently exits 1** on a pre-existing error (see Known-Broken); `npm run build` is clean.
+  A red lint run is not necessarily your change — check the reported file first.
 
-# Run specific test by name
-cd packages/api && pytest -k "test_parse_eml_file"
-```
-
-### Frontend
-
-```bash
-cd packages/web
-
-# Build for production
-npm run build
-
-# Lint
-npm run lint
-
-# Preview production build
-npm run preview
-```
+`ruff` and `mypy` are **not installed and not configured**, despite `AGENT_PLAYBOOK.md` §5 requiring
+both pre-PR. Adding them to `packages/api/pyproject.toml` `[project.optional-dependencies].dev` is
+outstanding work — don't report those checks as passing when they never ran.
 
 ## Architecture
 
-### Backend Structure (packages/api/app/)
+### Backend (`packages/api/app/`)
 
-The backend follows a **layered architecture** with clear separation of concerns:
+Layering is `routers → services → repositories → models`. Routers must never reach past services into
+repositories. Full rules in `AGENT_PLAYBOOK.md` §3.
 
-```
-routers/      → API endpoints (HTTP layer)
-    ↓
-services/     → Business logic orchestration
-    ↓
-repositories/ → Data access layer (ORM queries)
-    ↓
-models/       → SQLAlchemy ORM models
-```
+**Dependency injection is FastAPI `Depends()` all the way down.** `EmailRepository.__init__` takes
+`db: Session = Depends(get_db)`, `EmailService.__init__` takes `email_repo: EmailRepository = Depends()`,
+and routers take `email_service: EmailService = Depends()`. FastAPI resolves the entire chain from the
+route signature — instantiating these classes outside a request means constructing collaborators by hand.
 
-**Key patterns:**
-- `models/base.py` exports the SQLAlchemy `Base` class used by all ORM models
-- `db/database.py` provides the `engine`, `SessionLocal`, and `get_db()` dependency
-- Database tables are auto-created on app startup via `Base.metadata.create_all()` in `main.py`
-- Services use FastAPI's `Depends()` for dependency injection of repositories
-- Pydantic schemas in `schemas/` handle request/response validation and ORM-to-dict conversion using `.model_validate()`
+**Package wiring:** `app/models/__init__.py` re-exports `Base` and `Email`; `app/db/__init__.py`
+re-exports `engine`, `SessionLocal`, `get_db`; `app/schemas/__init__.py` re-exports the email schemas.
+Import from the package (`from app.models import Email`), matching existing code.
 
-**Email processing flow:**
-1. Router receives .eml file upload → `routers/emails.py`
-2. EmailService orchestrates parsing and persistence → `services/email_service.py`
-3. EmailParser extracts metadata and HTML-to-text conversion → `services/email_parser.py`
-4. EmailRepository handles database operations → `repositories/email.py`
-5. Returns Pydantic schema via `.model_validate()` for API response
+**Absolute `app.`-prefixed imports are mandatory.** Both the app and pytest run with `packages/api/` as
+the working directory, so `from services.x import Y` raises `ModuleNotFoundError`. This is precisely why
+`app/routers/auth.py` is commented out of `main.py` — it imports `from auth.gmail_oauth_client import ...`
+and `from config import ...`, neither of which resolves. Fixing those two lines is a prerequisite to
+enabling the auth router.
 
-**Important details:**
-- HTML text extraction uses a custom `HTMLTextExtractor(HTMLParser)` class in `email_parser.py` that skips `<script>` and `<style>` tags
-- Email validation requires both `subject` and `sender` fields in `EmailService.process_file()`
-- The SQLite database file is `mail2audio.db` in `packages/api/`
+**Table creation:** `Base.metadata.create_all(bind=engine)` runs at import time in `app/main.py`. There
+are no migrations, so any model change requires deleting `packages/api/mail2audio.db` and restarting.
+Alembic is present in the venv but never initialised.
 
-### Frontend Structure (packages/web/src/)
+### Email pipeline
 
-```
-pages/          → Route components (Landing, Dashboard, EmailDetail)
-components/     → Reusable UI components
-services/       → API client (emailApi.ts communicates with FastAPI)
-hooks/          → Custom React hooks (useAuth, useEmailUpload)
-types/          → TypeScript type definitions
-```
+`routers/emails.py` → `EmailService.process_file()` → `EmailParser.parse_eml_file()` → `EmailRepository.create()`
 
-**Key integration points:**
-- Vite proxies `/api` and `/auth` requests to `http://localhost:8000` (see `packages/web/vite.config.ts`)
-- `emailApi.ts` handles all API communication with proper error handling
-- React Router v7 manages client-side routing
+`EmailParser` extracts the **`text/html` part only**, so a plain-text-only email yields `body = None`.
+Dates return `None` on any parse failure. `EmailService.process_file()` rejects emails missing
+`subject` or `sender`.
 
-## Database
+Package-specific notes live in `packages/web/CLAUDE.md` and `infrastructure/CLAUDE.md`; they load
+automatically when you work in those trees.
 
-- **Type:** SQLite (file: `packages/api/mail2audio.db`)
-- **ORM:** SQLAlchemy with declarative base
-- **Schema:** Auto-created on startup, no migrations currently configured
-- **Models:** `Email` (email_model.py), `User` (user_model.py - in progress)
+## Known-Broken / In-Progress
 
-To reset the database, delete `packages/api/mail2audio.db` and restart the server.
+Do not treat these as working code to build on:
 
-## Authentication (In Progress)
+- **Two test modules fail at collection.** `tests/test_repositories/test_email_repository.py` imports
+  `EmailCreate` from `app.schemas.email` — a schema that was never written; `tests/test_services/test_email_service.py`
+  uses a non-`app.`-prefixed import. Current baseline is `9 passed, 2 errors`.
+- **The upload route is miswired.** `routers/emails.py` reads `content = await file.read()`, calls
+  `EmailParser.parse_eml_file(content)`, discards the result, then calls `email_service.process_file(file)`
+  — passing the `UploadFile` where `process_file` type-checks for `bytes` and raises `TypeError`.
+- **Schema mismatches.** `EmailService` returns `EmailBase`, which lacks `id`/`received_at`/`created_at`
+  and has no `from_attributes=True`, while routers declare `response_model=EmailResponse`. `EmailBase`
+  also uses `minlength=`, silently ignored by Pydantic v2 (correct key: `min_length`) — this is the source
+  of the deprecation warnings in every test run. The frontend `types/email.ts` expects `has_audio`,
+  `body_html`, and `body_text`, none of which the backend returns.
+- **Frontend lint is red.** `hooks/useEmailUpload.ts:25` binds `err` in a `catch` and never uses it,
+  tripping `@typescript-eslint/no-unused-vars`. One error, and the only one — fix it and the suite is green.
+- **Empty files:** `models/user_model.py`, `repositories/user_repo.py`, `schemas/auth_schema.py`.
+  No `User` model exists, so `Email` has no owner FK.
+- **Auth:** `auth/gmail_oauth_client.py` is fully implemented (authorization URL, code exchange, token
+  persisted to `tokens/gmail_token.json` at chmod 600) but nothing calls it; `routers/auth.py` is TODO stubs.
 
-Gmail OAuth integration is partially implemented:
-- `packages/api/app/auth/gmail_oauth_client.py` contains OAuth client
-- `packages/api/app/routers/auth.py` exists but is commented out in `main.py`
-- Frontend has `useAuth` hook and Google sign-in buttons
+## Conventions
 
-## Infrastructure (Scaffolding Only)
+- `app/config.py` holds Gmail OAuth constants as plain module-level strings — no env-var loading exists.
+  `.env/` is a gitignored *directory* of local secrets, not a dotenv file.
+- `db/database.py` sets `echo=True`, so dev and test output is flooded with SQL. Test engines pass
+  `echo=False`.
+- `.gitignore` is deliberately split: the root file holds cross-cutting rules only, with tool-specific
+  ignores in `packages/api/`, `packages/web/`, and `infrastructure/terraform/`. Add new ignores to the
+  nearest nested file.
+- Test fixtures are layered: `tests/conftest.py` (`test_app`, `client`, `sample_email_html`),
+  `test_repositories/conftest.py` (in-memory SQLite `test_engine`/`test_db`, sample data), and
+  `test_services/conftest.py` (mocked repo/parser plus real `.eml` fixtures resolved from
+  `docs/email-examples/` via `Path(__file__).resolve().parents[4]` — that hop count breaks if tests move).
+- `email_parser.py` still contains debug `print()` calls, which the playbook forbids.
 
-`infrastructure/` holds IaC starting points — no real resources are defined yet:
+## Agent Workflow
 
-- **Terraform** (`infrastructure/terraform/`): AWS provider `~> 5.0`, region defaults to `eu-west-2` (via `var.aws_region`), default tags applied to all resources (`Project`, `Environment`, `ManagedBy`). State files and `*.tfvars` are gitignored — never commit them
-- **Ansible** (`infrastructure/ansible/`): `site.yml` playbook skeleton. Copy `inventory/hosts.example` to `inventory/hosts` (the real inventory is gitignored)
+`AGENT_PLAYBOOK.md` at the repo root is binding — read it before starting issue-driven work. Highlights:
 
-## Testing Strategy
-
-- Tests mirror the `app/` directory structure in `packages/api/tests/`
-- `packages/api/tests/conftest.py` provides shared fixtures: `test_app`, `client`, `sample_email_html`
-- Use `TestClient` from FastAPI for router integration tests
-- Repository tests should mock database interactions
-- Service tests should test business logic with mocked repositories
-
-## Common Gotchas
-
-1. **Email parsing**: Only .eml files are supported. The parser expects HTML content and converts to plain text
-2. **Database session**: Always use `get_db()` dependency for database sessions in routes
-3. **Schema conversion**: Use `.model_validate(orm_instance)` to convert SQLAlchemy models to Pydantic schemas
-4. **Proxy configuration**: Frontend API calls work via Vite proxy in dev; production needs different setup
-5. **Date parsing**: Email dates use `parsedate_to_datetime()` and can return None if invalid
-6. **Running commands**: Backend commands (fastapi, pytest) must be run from `packages/api/`
-
-## Agent Playbook
-
-Full workflow rules are in `AGENT_PLAYBOOK.md` at the project root. Read it before starting any issue-driven work.
-
-Key rules (always apply):
-- Never push directly to `main` or `dev` — all changes go through PRs targeting `dev`
-- Conventional commits required (e.g., `feat(parser): add boilerplate removal`)
-- TDD: write tests before implementation (Red → Green → Refactor)
-- Follow the layered architecture — routers → services → repositories → models
-- Run `pytest`, `ruff check`, and `mypy` before creating PRs
-- Branch naming: `feature/<issue-number>-<short-description>` from `dev`
-- All plans and issue selections require human approval (Level 1 autonomy)
-
-## Current State
-
-- Monorepo structure with `packages/api/` (backend) and `packages/web/` (frontend)
-- Repository pattern for data access
-- User model and authentication schemas
-- Landing, dashboard, and email detail pages
-- Modern SPA with API backend
-- Terraform (AWS) and Ansible scaffolding in `infrastructure/` — no real resources defined yet
+- Never push to `main` or `dev` (both are protected); branch `feature/<issue-number>-<desc>` from `dev`
+  and PR back into `dev`.
+- Level 1 autonomy: issue selection **and** the implementation plan each require human approval before
+  any code is written.
+- TDD is mandatory (Red → Green → Refactor). Conventional commits, subject ≤ 72 chars, imperative mood.
+- Max 300 lines per file, 30 lines per function; type hints and docstrings on all public Python methods.
