@@ -41,10 +41,65 @@ class TestParseEmlFile:
         body = EmailParser.parse_eml_file(eml_content)
 
         # Assert
-        assert body["body"] is not None
-        assert len(body["body"]) > 100  # Should have substantial content
-        assert "US markets kicked off a packed earnings week on a strong note" in body["body"]
-        assert "Emma Dunkley" in body["body"] or "FT's asset management reporter" in body["body"]
+        assert body["body_text"] is not None
+        assert len(body["body_text"]) > 100  # Should have substantial content
+        assert "US markets kicked off a packed earnings week on a strong note" in body["body_text"]
+        assert (
+            "Emma Dunkley" in body["body_text"]
+            or "FT's asset management reporter" in body["body_text"]
+        )
+
+    def test_keeps_the_raw_html_alongside_the_text(self, sample_eml_files):
+        """The HTML is retained so extraction can be improved without re-uploading."""
+        # Arrange
+        with open(sample_eml_files["vision"], "rb") as f:
+            eml_content = f.read()
+
+        # Act
+        parsed = EmailParser.parse_eml_file(eml_content)
+
+        # Assert
+        assert parsed["body_html"] is not None
+        assert "<html" in parsed["body_html"].lower()
+        assert parsed["body_html"] != parsed["body_text"]
+
+    def test_plain_text_email_yields_no_html(self):
+        """A newsletter with no HTML part must parse, not crash."""
+        # Arrange
+        eml_content = (
+            b"Subject: Plain text only\r\n"
+            b"From: newsletter@vestact.com\r\n"
+            b"To: user@example.com\r\n"
+            b"Content-Type: text/plain; charset=utf-8\r\n"
+            b"\r\n"
+            b"Just words, no markup.\r\n"
+        )
+
+        # Act
+        parsed = EmailParser.parse_eml_file(eml_content)
+
+        # Assert
+        assert parsed["body_html"] is None
+        assert parsed["subject"] == "Plain text only"
+
+    def test_unparseable_date_yields_none(self):
+        """A malformed Date header must not block ingestion."""
+        # Arrange
+        eml_content = (
+            b"Subject: Bad date\r\n"
+            b"From: newsletter@vestact.com\r\n"
+            b"To: user@example.com\r\n"
+            b"Date: definitely not a date\r\n"
+            b"Content-Type: text/plain; charset=utf-8\r\n"
+            b"\r\n"
+            b"Body.\r\n"
+        )
+
+        # Act
+        parsed = EmailParser.parse_eml_file(eml_content)
+
+        # Assert
+        assert parsed["received_at"] is None
 
 
 class TestExtractHtmlContent:

@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
-from app.db import engine
-from app.models import Base
 from app.routers import emails
 
-# Create tables on startup
-Base.metadata.create_all(bind=engine)
+# Schema is owned by Alembic -- run `alembic upgrade head` to create or update
+# it. Creating tables here on import would silently diverge from the migration
+# history and, worse, would do so as a side effect of merely importing the app
+# (which is what test collection does).
 
 app = FastAPI(title="Mail2Audio")
 
